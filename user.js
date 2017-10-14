@@ -14,7 +14,7 @@ btn.addEventListener('click', function() {
 
 	function handleErrors(res) {
 		if (!res.ok) {
-			throw Error("Oops! An error happened");
+			throw Error(res.status);
 		}
 		return res;
 	}
@@ -34,5 +34,5 @@ btn.addEventListener('click', function() {
 	}
 
 	function printError(err) {
-		console.log(err);
+		console.log("An error happened. Status code: " + err);
 	}
