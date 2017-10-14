@@ -1,24 +1,34 @@
 
 var url = 'https://randomuser.me/api/';
-fetch(url)
-	.then(handleErrors)
-	.then(parseJSON)
-	.then(updateProfile)
-	.catch(printError)
 
-	function handleErrors(req) {
-		if (!req.ok) {
-			throw Error("Error fetching request");
+document.getElementById('btn').onclick = function() {
+	fetch(url)
+		.then(handleErrors)
+		.then(parseJSON)
+		.then(updateProfile)
+		.catch(printError)	
+}
+
+	function handleErrors(res) {
+		if (!res.ok) {
+			throw Error("Oops! An error happened");
 		}
-		return req;
+		return res.json();
 	}
 
-	function parseJSON() {
-
+	function parseJSON(data) {
+		return data.results[0];
 	}
 
-	function updateProfile() {
-
+	function updateProfile(user) {
+		console.log(user);
+		document.getElementById('avatar').src = user.picture.medium;
+		document.getElementById('fullname').innerHTML = user.name.first + " " + user.name.last;
+		document.getElementById('username').innerHTML = user.login.username;
+		document.getElementById('email').innerHTML = user.email;
+		document.getElementById('city').innerHTML = user.location.city;
+		
+		return user;
 	}
 
 	function printError(err) {
